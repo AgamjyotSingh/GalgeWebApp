@@ -38,8 +38,13 @@ public class GenericResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String getXml() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        return  "<bank navn='Nordea'>"
+                + "<kunder>"
+                + " <kunde "
+                +   "navn='Morten' "
+                +   "kredit='1000'/>"
+                + " </kunder>"
+                + "</bank>";
     }
 
     /**
