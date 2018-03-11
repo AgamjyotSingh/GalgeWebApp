@@ -30,22 +30,22 @@ public class Game {
     String REMOTEURL = "rmi://130.225.170.246/gameCalls";
     GameI gameCalls;
     GalgeI galgeI;
-    String welcomeMessage;
+    String welcomeMessage = "";
 
     public Game() throws NotBoundException, MalformedURLException, RemoteException {
         this.gameCalls = (GameI) Naming.lookup(REMOTEURL);
-   
-        
+        this.galgeI = gameCalls.findGame("Test");
     }
     
     public Game(String userName) throws RemoteException {
-        if (gameCalls.findGame(userName) != null) {
+        if(this.gameCalls.findGame(userName) != null) {
             welcomeMessage = "Welcome back: " + userName;
             this.galgeI = gameCalls.findGame(userName);
         } else {
-            gameCalls.registerPlayer(userName);
-            gameCalls.findGame(userName);
-            welcomeMessage = "New game started, with player: " + userName;
+            this.gameCalls.registerPlayer(userName);
+            welcomeMessage = "New game started, with user: " + userName;
+            this.galgeI = gameCalls.findGame(userName);
+            
         }
     }
 
@@ -58,10 +58,10 @@ public class Game {
         //Set some data
         HashMap<String, Object> mustacheData = new HashMap<String, Object>();
         //render template with data
-        mustacheData.put("welcomeMessage", welcomeMessage);
         mustacheData.put("visibleWord", galgeI.getVisibleWords());
         mustacheData.put("usedLetters", galgeI.getUserWords());
         mustacheData.put("wrongLetters", galgeI.getTotalWrongGuess());
+        mustacheData.put("welcomeMessage", welcomeMessage);
         StringWriter writer = new StringWriter();
         m.execute(writer, mustacheData).flush();
         return writer.toString();

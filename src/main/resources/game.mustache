@@ -129,6 +129,8 @@ function changeImg(){
 }
         </script>
     </head>
+<body>
+<h2>{{ welcomeMessage }}</h2>
 <div class="container color-dark2">
   <div class="col" style="text-align: center">
       <img src="../Images/galge.png" alt="Galgeleg" id="galgeImg">
@@ -139,11 +141,11 @@ function changeImg(){
         Wrong letters: {{ wrongLetters }}<br>
         Used letters: {{ usedLetters }}</h4>
     <p align="center">
-<input type="text" class="txt" placeholder="Indtast bogstav" maxlength="1" style="height: 25px; width: 175px"><br>
+<input type="text" class="txt" name="guess" placeholder="Indtast bogstav" maxlength="1" style="height: 25px; width: 175px"><br>
     <br><button id="wrongLetters" onClick="changeImg()" class="button" style="height: 50px; width: 200px; size: 24px">GÆT!</button><br>
     </p>
     </Form>
 
-
+</body>
 
 </html>
