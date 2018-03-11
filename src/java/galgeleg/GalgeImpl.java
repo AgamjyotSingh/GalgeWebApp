@@ -1,18 +1,20 @@
-
+package galgeleg;
 
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Khurram Saeed Malik
  */
-public class GalgeInterfaceImpl extends UnicastRemoteObject implements GalgeI {
+public class GalgeImpl extends UnicastRemoteObject implements GalgeI {
     private Galgelogik logic;
 
-    public GalgeInterfaceImpl() throws RemoteException {
+    public GalgeImpl() throws RemoteException {
         logic = new Galgelogik();
     }
 
@@ -58,7 +60,6 @@ public class GalgeInterfaceImpl extends UnicastRemoteObject implements GalgeI {
 
     @Override
     public void guessWord(String guess) throws RemoteException {
-        
         logic.gætBogstav(guess);
         logic.logStatus();
     }
@@ -66,6 +67,15 @@ public class GalgeInterfaceImpl extends UnicastRemoteObject implements GalgeI {
     @Override
     public void resetGame() throws RemoteException {
         logic.nulstil();
+    }
+
+    @Override
+    public void getWordsFromDR() throws RemoteException {
+        try {
+            logic.hentOrdFraDr();
+        } catch (Exception ex) {
+            Logger.getLogger(GalgeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
