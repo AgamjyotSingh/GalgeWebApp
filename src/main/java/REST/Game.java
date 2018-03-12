@@ -61,7 +61,7 @@ public class Game {
         mustacheData.put("visibleWord", galgeI.getVisibleWords());
         mustacheData.put("usedLetters", galgeI.getUserWords());
         mustacheData.put("wrongLetters", galgeI.getTotalWrongGuess());
-        if(galgeI.getTotalWrongGuess()>0) {
+        if(galgeI.getTotalWrongGuess()>0 && galgeI.getTotalWrongGuess() < 7) {
             mustacheData.put("hangmanstate", galgeI.getTotalWrongGuess());
         }
         mustacheData.put("welcomeMessage", welcomeMessage);
@@ -72,12 +72,12 @@ public class Game {
     
     @POST
     public String guessWord(@FormParam("guess") String guess) throws IOException, NotBoundException, RemoteException, InterruptedException {
-        if(guess!=null) {
-             gameStatus(galgeI, guess);
-              if (galgeI.isGameWon()) { 
+        if (galgeI.isGameWon()) { 
                welcomeMessage = "You guessed the word: " + galgeI.getWord() + ", congragulations";
                return play();
               }
+        if(guess!=null) {
+             gameStatus(galgeI, guess);
         }
         return play();
     }
