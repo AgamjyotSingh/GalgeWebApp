@@ -72,10 +72,6 @@ public class Game {
     
     @POST
     public String guessWord(@FormParam("guess") String guess) throws IOException, NotBoundException, RemoteException, InterruptedException {
-        if (galgeI.isGameWon()) { 
-               welcomeMessage = "You guessed the word: " + galgeI.getWord() + ", congragulations";
-               return play();
-              }
         if(guess!=null) {
              gameStatus(galgeI, guess);
         }
@@ -91,8 +87,8 @@ public class Game {
                 // hangman state depends on temp
                 System.err.println("Hangmanstate: " + temp +"\n");
             }
-
             if (galgeI.isGameWon()) {
+                welcomeMessage = "You guessed the word: " + galgeI.getWord() + ", congragulations";
                 return "Game won!";
                 
             } else if (!galgeI.isGameLost()) {
