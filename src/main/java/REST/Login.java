@@ -1,12 +1,25 @@
 package REST;
 
+import brugerautorisation.data.Bruger;
+import brugerautorisation.data.Diverse;
+import brugerautorisation.transport.rmi.Brugeradmin;
 import javax.ws.rs.Path;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import galgeleg.GalgeI;
+import game.GameClient;
+import game.GameI;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -14,11 +27,16 @@ import javax.ws.rs.core.MediaType;
 
 @Path("login")
 public class Login {
-
+    String REMOTEURL = "rmi://130.225.170.246/gameCalls";
+    GameI gameCalls;
+    GalgeI galgeI;
+    
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String postLogin(@FormParam("usrname") String userName,
-                            @FormParam("psswrd") String passWord) throws IOException {
+                            @FormParam("psswrd") String passWord) throws IOException, NotBoundException {
+        login(userName, passWord);
+        Game.userName = userName;
         //Initialize Mustache renderer
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache m = mf.compile("loginsuccess.mustache");
@@ -29,5 +47,27 @@ public class Login {
         StringWriter writer = new StringWriter();
         m.execute(writer, mustacheData).flush();
         return writer.toString();
+        
     }
+    
+    public String login(String userName, String passWord) throws NotBoundException, RemoteException, MalformedURLException{
+        
+        Bruger user;
+        try{
+        Brugeradmin userAdmin = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
+        user = userAdmin.hentBruger(userName, passWord);
+        System.out.println("Fik bruger = " + user);
+        System.out.println("Data: " + Diverse.toString(user));
+       
+        } catch (IllegalArgumentException loginFejl) {
+            System.out.println("loginfejl " + loginFejl.getMessage());
+           
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    
+        
+    }
+   
 }

@@ -31,7 +31,8 @@ public class Game {
     GameI gameCalls;
     GalgeI galgeI;
     static String welcomeMessage = "";
-    static String userName = "NOTSET";
+    static String userName;
+    
     public Game() throws RemoteException, NotBoundException, NotBoundException, MalformedURLException {
         userName(userName);
     }
