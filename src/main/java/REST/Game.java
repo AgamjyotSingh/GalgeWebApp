@@ -33,6 +33,7 @@ public class Game {
     static String welcomeMessage = "";
     static String userName;
     
+    
     public Game() throws RemoteException, NotBoundException, NotBoundException, MalformedURLException {
         userName(userName);
     }
@@ -63,6 +64,7 @@ public class Game {
         mustacheData.put("visibleWord", galgeI.getVisibleWords());
         mustacheData.put("usedLetters", galgeI.getUserWords());
         mustacheData.put("wrongLetters", galgeI.getTotalWrongGuess());
+        mustacheData.put("hangmanstate", galgeI.getTotalWrongGuess());
         mustacheData.put("welcomeMessage", welcomeMessage);
         StringWriter writer = new StringWriter();
         m.execute(writer, mustacheData).flush();

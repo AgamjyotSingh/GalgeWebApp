@@ -15,7 +15,7 @@ public class Galgelogik {
   private String ordet;
   private ArrayList<String> brugteBogstaver = new ArrayList<String>();
   private String synligtOrd;
-  private int antalForkerteBogstaver;
+  private int antalForkerteBogstaver = 0;
   private boolean sidsteBogstavVarKorrekt;
   private boolean spilletErVundet;
   private boolean spilletErTabt;

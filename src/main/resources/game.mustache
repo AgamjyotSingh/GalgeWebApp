@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Galgeleg</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
@@ -98,8 +98,8 @@ input.btn {
 
 
         </style>
-        <script>
-            var wrongLetters = 0;
+        <!-- <script>
+var wrongLetters = {{wrongLetters}};
 
 function changeImg(){
     
@@ -127,13 +127,13 @@ function changeImg(){
         document.getElementById("galgeImg").src = "../Images/galge.png";
     }
 }
-        </script>
+        </script> -->
     </head>
 <body>
 <h2>{{ welcomeMessage }}</h2>
 <div class="container color-dark2">
   <div class="col" style="text-align: center">
-      <img src="../Images/galge.png" alt="Galgeleg" id="galgeImg">
+      <img src="../Images/galge{{ hangmanstate }}.png" alt="Galgeleg" id="galgeImg">
   </div>
 </div>
     <Form method="POST">
