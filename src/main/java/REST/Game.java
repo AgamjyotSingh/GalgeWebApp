@@ -30,11 +30,11 @@ public class Game {
     String REMOTEURL = "rmi://130.225.170.246/gameCalls";
     GameI gameCalls;
     GalgeI galgeI;
-    static String welcomeMessage = "";
-    static String userName;
+    static String userName,welcomeMessage;
     
     
     public Game() throws RemoteException, NotBoundException, NotBoundException, MalformedURLException {
+        welcomeMessage = "Playing as: " + userName;
         userName(userName);
     }
     
@@ -42,13 +42,10 @@ public class Game {
     public void userName(String userName) throws RemoteException, NotBoundException, MalformedURLException {
         this.gameCalls = (GameI) Naming.lookup(REMOTEURL);
         if(this.gameCalls.findGame(userName) != null) {
-            welcomeMessage = "Welcome back: " + userName;
             this.galgeI = gameCalls.findGame(userName);
         } else {
             this.gameCalls.registerPlayer(userName);
-            welcomeMessage = "New game started, with user: " + userName;
-            this.galgeI = gameCalls.findGame(userName);
-            
+            this.galgeI = gameCalls.findGame(userName);       
         }
     }
 
@@ -64,7 +61,9 @@ public class Game {
         mustacheData.put("visibleWord", galgeI.getVisibleWords());
         mustacheData.put("usedLetters", galgeI.getUserWords());
         mustacheData.put("wrongLetters", galgeI.getTotalWrongGuess());
-        mustacheData.put("hangmanstate", galgeI.getTotalWrongGuess());
+        if(galgeI.getTotalWrongGuess()>0) {
+            mustacheData.put("hangmanstate", galgeI.getTotalWrongGuess());
+        }
         mustacheData.put("welcomeMessage", welcomeMessage);
         StringWriter writer = new StringWriter();
         m.execute(writer, mustacheData).flush();
