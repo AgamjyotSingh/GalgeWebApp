@@ -30,14 +30,15 @@ public class Game {
     String REMOTEURL = "rmi://130.225.170.246/gameCalls";
     GameI gameCalls;
     GalgeI galgeI;
-    String welcomeMessage = "";
-
-    public Game() throws NotBoundException, MalformedURLException, RemoteException {
-        this.gameCalls = (GameI) Naming.lookup(REMOTEURL);
-        this.galgeI = gameCalls.findGame("Test");
+    static String welcomeMessage = "";
+    static String userName = "NOTSET";
+    public Game() throws RemoteException, NotBoundException, NotBoundException, MalformedURLException {
+        userName(userName);
     }
     
-    public Game(String userName) throws RemoteException {
+    
+    public void userName(String userName) throws RemoteException, NotBoundException, MalformedURLException {
+        this.gameCalls = (GameI) Naming.lookup(REMOTEURL);
         if(this.gameCalls.findGame(userName) != null) {
             welcomeMessage = "Welcome back: " + userName;
             this.galgeI = gameCalls.findGame(userName);
@@ -68,14 +69,18 @@ public class Game {
     }
     
     @POST
-    public String guessWord(@FormParam("guess") String guess) throws IOException, NotBoundException {
+    public String guessWord(@FormParam("guess") String guess) throws IOException, NotBoundException, RemoteException, InterruptedException {
         if(guess!=null) {
              gameStatus(galgeI, guess);
+              if (galgeI.isGameWon()) { 
+               welcomeMessage = "You guessed the word: " + galgeI.getWord() + ", congragulations";
+               return play();
+              }
         }
         return play();
     }
     
-    public static String gameStatus(GalgeI galgeI, String guess) throws RemoteException {
+    public String gameStatus(GalgeI galgeI, String guess) throws RemoteException, InterruptedException, IOException, NotBoundException, NotBoundException {
     while (true) {
             int temp = galgeI.getTotalWrongGuess();
             if (temp <= 6) {
@@ -86,8 +91,7 @@ public class Game {
             }
 
             if (galgeI.isGameWon()) {
-                galgeI.resetGame();
-                return "Game is Won!";
+                return "Game won!";
                 
             } else if (!galgeI.isGameLost()) {
                 galgeI.guessWord(guess);
