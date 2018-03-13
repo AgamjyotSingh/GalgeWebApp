@@ -8,7 +8,6 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import galgeleg.GalgeI;
-import game.GameClient;
 import game.GameI;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -17,7 +16,6 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -35,37 +33,35 @@ public class Login {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String postLogin(@FormParam("usrname") String userName,
                             @FormParam("psswrd") String passWord) throws IOException, NotBoundException {
-        
         Game.userName = userName;
         //Initialize Mustache renderer
         if(login(userName, passWord).equals("Success")) {
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache m = mf.compile("loginsuccess.mustache");
-        //Set some data
-        HashMap<String, Object> mustacheData = new HashMap<String, Object>();
-        mustacheData.put("username", userName);
-        //render template with data
-        StringWriter writer = new StringWriter();
-        m.execute(writer, mustacheData).flush();
-        return writer.toString();
+            MustacheFactory mf = new DefaultMustacheFactory();
+            Mustache m = mf.compile("loginsuccess.mustache");
+            //Set some data
+            HashMap<String, Object> mustacheData = new HashMap<String, Object>();
+            mustacheData.put("username", userName);
+            //render template with data
+            StringWriter writer = new StringWriter();
+            m.execute(writer, mustacheData).flush();
+            return writer.toString();
         }
         
         else if(login(userName, passWord).equals("Login error")){
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache m = mf.compile("loginError.mustache");
-        //Set some data
-        HashMap<String, Object> mustacheData = new HashMap<String, Object>();
-        mustacheData.put("username", userName);
-        //render template with data
-        StringWriter writer = new StringWriter();
-        m.execute(writer, mustacheData).flush();
-        return writer.toString();    
+            MustacheFactory mf = new DefaultMustacheFactory();
+            Mustache m = mf.compile("loginError.mustache");
+            //Set some data
+            HashMap<String, Object> mustacheData = new HashMap<String, Object>();
+            mustacheData.put("username", userName);
+            //render template with data
+            StringWriter writer = new StringWriter();
+            m.execute(writer, mustacheData).flush();
+            return writer.toString();    
         }
         return null;
     }
     
     public String login(String userName, String passWord) throws NotBoundException, RemoteException, MalformedURLException{
-        
         Bruger user;
         try{
         Brugeradmin userAdmin = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
@@ -79,7 +75,7 @@ public class Login {
             
            
         } catch (MalformedURLException ex) {
-            Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error in Login: "+ex.getLocalizedMessage());
         } 
         return "Success";
     
