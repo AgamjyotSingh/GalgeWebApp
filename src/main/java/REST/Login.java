@@ -35,9 +35,10 @@ public class Login {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String postLogin(@FormParam("usrname") String userName,
                             @FormParam("psswrd") String passWord) throws IOException, NotBoundException {
-        login(userName, passWord);
+        
         Game.userName = userName;
         //Initialize Mustache renderer
+        if(login(userName, passWord).equals("Success")) {
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache m = mf.compile("loginsuccess.mustache");
         //Set some data
@@ -47,7 +48,20 @@ public class Login {
         StringWriter writer = new StringWriter();
         m.execute(writer, mustacheData).flush();
         return writer.toString();
+        }
         
+        else if(login(userName, passWord).equals("Login error")){
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache m = mf.compile("loginError.mustache");
+        //Set some data
+        HashMap<String, Object> mustacheData = new HashMap<String, Object>();
+        mustacheData.put("username", userName);
+        //render template with data
+        StringWriter writer = new StringWriter();
+        m.execute(writer, mustacheData).flush();
+        return writer.toString();    
+        }
+        return null;
     }
     
     public String login(String userName, String passWord) throws NotBoundException, RemoteException, MalformedURLException{
@@ -61,11 +75,13 @@ public class Login {
        
         } catch (IllegalArgumentException loginFejl) {
             System.out.println("loginfejl " + loginFejl.getMessage());
+            return "Login error";
+            
            
         } catch (MalformedURLException ex) {
             Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        return null;
+        return "Success";
     
         
     }
