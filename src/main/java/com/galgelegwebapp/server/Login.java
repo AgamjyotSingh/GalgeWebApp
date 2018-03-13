@@ -1,7 +1,6 @@
-package REST;
+package com.galgelegwebapp.server;
 
 import brugerautorisation.data.Bruger;
-import brugerautorisation.data.Diverse;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import javax.ws.rs.Path;
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -16,8 +15,6 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -67,7 +64,6 @@ public class Login {
         Brugeradmin userAdmin = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
         user = userAdmin.hentBruger(userName, passWord);
         System.out.println("Fik bruger = " + user);
-        System.out.println("Data: " + Diverse.toString(user));
        
         } catch (IllegalArgumentException loginFejl) {
             System.out.println("loginfejl " + loginFejl.getMessage());

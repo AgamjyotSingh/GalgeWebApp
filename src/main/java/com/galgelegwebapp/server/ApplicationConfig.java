@@ -1,4 +1,4 @@
-package REST;
+package com.galgelegwebapp.server;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -24,9 +24,9 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(REST.Game.class);
-        resources.add(REST.GenericResource.class);
-        resources.add(REST.Login.class);
+        resources.add(com.galgelegwebapp.server.Game.class);
+        resources.add(com.galgelegwebapp.server.GenericResource.class);
+        resources.add(com.galgelegwebapp.server.Login.class);
     }
     
 }
