@@ -1,4 +1,4 @@
-package com.galgelegwebapp.server;
+package com.galgelegwebapp.rest;
 
 import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
