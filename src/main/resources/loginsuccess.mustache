@@ -1,16 +1,119 @@
-<!DOCTYPE html>
+        <p align=<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login Success</title>
 </head>
-<body>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Raleway:300,700');
+ 
+body{
+    background: #2E9CE6;
+    padding: 3em;
+    font-family: 'Raleway', 'Arial';
+    color: #fff;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0 0 2em 0;
+    padding:0;
+}
+
+ul li {
+    display:inline;
+    margin-right: 30px;
+}
+
+ul li a {
+    font-size: 1.5em;
+
+}
+
+a{
+    color: #fff;
+    text-decoration:none;
+}
+
+.container {
+    display: grid;
+}
+
+.col {
+    padding: .4em 1.3em;
+}
+.color-dark{
+    background: #2885C4;
+}
+.color-dark2{
+    background: #FFFFFF;
+}
+.color-light {
+    background: #57b3f1
+}
+
+input.txt {
+    border: 1em;
+    padding: 1em;
+    margin-top: 2em;
+    font-size: 24px;
+    text-align: center;
+    width: 10%;
+}
+
+input.btn {
+    border: 0;
+    display: block;
+    background: #a5f883;
+    color: #003A61;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.button{
+    border: none;
+    display: block;
+    background-color: #a5f883;
+    color: #003A61;
+    cursor: pointer;
+    font-size: 18px;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.life-container{
+    background: #3fa0e1;
+    padding: 1em;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+</style>
+
+<p align="center" style="font-size:26px">
 
 Velkommen <b>{{username}}</b> du er nu logget ind
 
-Du kan foretage følgende handlinger: <br>
-<Form method="get" action="game">
-<Button type="submit">Nyt spil</Button>
-</Form>
-</body>
+</p>
+
+    <div class="container color-dark">
+  <div class="col" style="text-align: center">
+      <div class="container color-light" style="font-size: 24px">
+            Du kan foretage følgende handlinger:
+      </div><br>
+
+            <br><form method="get" action="game">
+        <p align="center">
+                <input type="submit" class="btn" value="Fortsæt Spil" style="height: 50px; width: 250px; size: 24px;"></input>
+                <br><input type="submit" class="btn" value="High Score" disabled style="height: 50px; width: 250px; size: 24px;"></input>
+        </p>
+</form>
+  </div>
+  </div>
 </html>
+       
+
+
