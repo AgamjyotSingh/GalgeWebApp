@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.galgelegwebapp.rest;
 
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -88,7 +83,7 @@ public class Game {
                 System.err.println("Hangmanstate: " + temp +"\n");
             }
             if (galgeI.isGameWon()) {
-                welcomeMessage = "You guessed the word: " + galgeI.getWord() + ", congragulations";
+                galgeI.resetGame();
                 return "Game won!";
                 
             } else if (!galgeI.isGameLost()) {
